@@ -1,0 +1,89 @@
+﻿@model logindemo.Models.Ticket
+
+@{
+    ViewData["Title"] = "Create Ticket";
+}
+
+<h2 class="mb-4">Create Ticket</h2>
+<div class="card shadow-sm p-4">
+    <form asp-action="Create" enctype="multipart/form-data" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+        
+        <div class="mb-3">
+            <label class="form-label">Ticket ID</label>
+            <input asp-for="TicketId" class="form-control" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="PoliceStation" class="form-label">Police Station</label>
+            <select asp-for="PoliceStation" class="form-control" required>
+                <option value="">-- Select --</option>
+                <option>Rediyarpalyam police station</option>
+                <option>Mudaliarpet police station</option>
+                <option>Kalapet police station</option>
+                <option>Ariyankuppam police station</option>
+                <option>Redichavady police station</option>
+                <option>Mettupalayam police station</option>
+                <option>Muthiyalpet police station</option>
+                <option>Madagadipet police station</option>
+            </select>
+            <span asp-validation-for="PoliceStation" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ReporterName" class="form-label">Reporter Name</label>
+            <input asp-for="ReporterName" class="form-control" required />
+            <span asp-validation-for="ReporterName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Issue" class="form-label">Issue</label>
+            <input asp-for="Issue" class="form-control" required />
+            <span asp-validation-for="Issue" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label">Description</label>
+            <textarea asp-for="Description" class="form-control" rows="4" required></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Priority" class="form-label">Priority</label>
+            <select asp-for="Priority" class="form-control" required>
+                <option value="">-- Select --</option>
+                <option>Low</option>
+                <option>Medium</option>
+                <option>High</option>
+            </select>
+            <span asp-validation-for="Priority" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Status" class="form-label">Status</label>
+            <select asp-for="Status" class="form-control" required>
+                <option value="">-- Select --</option>
+                <option>Open</option>
+                <option>Pending</option>
+                <option>Closed</option>
+            </select>
+            <span asp-validation-for="Status" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ImageFile" class="form-label">Upload Image</label>
+            <input asp-for="ImageFile" type="file" class="form-control" />
+            <span asp-validation-for="ImageFile" class="text-danger"></span>
+        </div>
+
+        <div class="text-end">
+            <button type="submit" class="btn btn-primary">Submit Ticket</button>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+

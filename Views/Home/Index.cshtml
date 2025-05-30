@@ -1,0 +1,101 @@
+﻿@model List<logindemo.Models.Ticket>
+
+@{
+    ViewData["Title"] = "CCTNS Admin Dashboard";
+
+    int total = Model.Count;
+    int open = Model.Count(t => t.Status == "Open");
+    int pending = Model.Count(t => t.Status == "Pending");
+    int closed = Model.Count(t => t.Status == "Closed");
+}
+
+<div class="container-fluid">
+    <h2 class="mb-4">CCTNS Admin Dashboard</h2>
+
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <div style="font-size: 2rem;">📄</div>
+                    <p class="card-text">Total Tickets</p>
+                    <h3>@total</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <div style="font-size: 2rem;">📬</div>
+                    <p class="card-text">Open</p>
+                    <h3>@open</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <div style="font-size: 2rem;">⏳</div>
+                    <p class="card-text">Pending</p>
+                    <h3>@pending</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <div style="font-size: 2rem;">✅</div>
+                    <p class="card-text">Closed</p>
+                    <h3>@closed</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h4>Ticket Details</h4>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Ticket ID</th>
+                <th>Police Station</th>
+                <th>Reporter Name</th>
+                <th>Issue</th>
+                <th>Status</th>
+                <th>Priority</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ticket in Model)
+            {
+                <tr>
+                    <td>@ticket.TicketId</td>
+                    <td>@ticket.PoliceStation</td>
+                    <td>@ticket.ReporterName</td>
+                    <td>@ticket.Issue</td>
+                    <td>
+                        <span class="badge bg-@GetStatusClass(ticket.Status)">
+                            @ticket.Status
+                        </span>
+                    </td>
+                    <td>
+                        <span class="badge bg-secondary">
+                            @ticket.Priority
+                        </span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@functions {
+    public string GetStatusClass(string status)
+    {
+        return status switch
+        {
+            "Open" => "danger",
+            "Pending" => "warning text-dark",
+            "Closed" => "success",
+            _ => "secondary"
+        };
+    }
+}
